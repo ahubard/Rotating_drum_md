@@ -4,7 +4,7 @@
 D = 1;                                         %Particle diameter
 D_drum = 50*D;                                 %Drum diameter
 R_drum = D_drum/2;                             %Drum radius
-N = ceil((D_drum/D)^2/2)+40;                   %Number of particles
+N = ceil((D_drum/D)^2/2)+60;                   %Number of particles
 g = 0.001;                                     %Gravity
 K = 1500;                                      %Elastic constant
 Qn = 30;                                      %Normal dissipation coefficient                                       %static friction.
@@ -32,11 +32,11 @@ cool_t = 0;
 rotation_marker = [R_drum 0];
 %% Simulation Parameters
 dt = 0.05;
-Nt = 1000000;
+Nt = 10000;
 
 %% Display Parameters
 plotit = true;            % do we plot?
-Nplotskip = 100;          % number of timesteps to skip before plotting
+Nplotskip = 300;          % number of timesteps to skip before plotting
 
 
 %% Setup Plotting

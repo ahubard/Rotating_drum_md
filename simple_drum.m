@@ -24,10 +24,11 @@ M = 1;
 % vx = randn(1,N)/50;
 % vy = randn(1, N)/50;
 load('Initial_Conditions.mat','xi','yi','vxi','vyi','DD','D','N','D_drum','R_drum');
-x = xi*cos(.1)-yi*sin(.1);
-y = xi*sin(.1)+yi*cos(.1);
-vx = randn(1,N)/1000;
-vy = randn(1, N)/1000;
+initial_rot = .2;
+x = xi*cos(initial_rot)-yi*sin(initial_rot);
+y = xi*sin(initial_rot)+yi*cos(initial_rot);
+vx = vxi;
+vy = vyi;
 ax_old = zeros(1,N);
 ay_old = zeros(1,N);
 nt = 0;
@@ -38,9 +39,9 @@ dt = 0.1;
 Nt = 1000000;
 NR = ceil(360/rot_step);
 Min_cool_down_time = 400;
-Min_Energy = 0.0001;
+Min_Energy = 0.004;
 %% Display Parameters
-plotit = true;            % do we plot?
+plotit = false;
 Nplotskip = 100;          % number of timesteps to skip before plotting
 
 %% Save parameters
@@ -69,6 +70,7 @@ if(plotit)
     rectangle('Position',[-R_drum -R_drum D_drum D_drum],'Curvature',[1 1],'edgecolor','k');
     hc = plot(rotation_marker(1),rotation_marker(2),'xr');
     h_cm = plot(sum(x)/N,sum(y)/N,'mo');
+    axis([-R_drum R_drum -R_drum R_drum]);
 end
 
 %% Main Loop
@@ -116,6 +118,9 @@ for nr = 1:NR
             if(rem(nt,1000)==0)
                 fprintf('%2d.',nr);
                 if(rem(nt,30000)==0)
+                    figure(2);
+                plot(Eks(1:(nt-1)/Nsave_skip +1));
+                axis([1 inf 0 inf])
                     fprintf('\n');
                 end
             end
